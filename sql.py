@@ -37,7 +37,7 @@ def populateQueryArr(queryArr):
     queryArr.append("Select all records from the Customers where the PostalCode column is NOT empty")
 
     #SQL UPDATE
-    queryArr.append("Update the City column of all records in the Customers table")
+    queryArr.append("Update the City column of all records in the Customers table to 'Oslo'")
     queryArr.append("In the Customers table, Set the value of the City columns to 'Oslo', but only the ones where the Country column has the value 'Norway'")
     queryArr.append("In the Customers table, set all cities to 'Oslo' and all countries to 'Norway' where the CustomerID = 32")
 
@@ -121,7 +121,7 @@ def populateAnswerArr(answerArr):
     answerArr.append("SELECT * FROM Customers WHERE PostalCode IS NOT NULL;")
 
     #SQL UPDATE
-    answerArr.append("UDPATE Customers SET City = 'Oslo';")
+    answerArr.append("UPDATE Customers SET City = 'Oslo';")
     answerArr.append("UPDATE Customers SET City = 'Oslo' WHERE Country = 'Norway';")
     answerArr.append("UPDATE Customers SET City = 'Oslo', Country = 'Norway' WHERE CustomerID = 32;")
 
