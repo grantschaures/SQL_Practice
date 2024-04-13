@@ -166,7 +166,7 @@ def populateAnswerArr(answerArr):
     answerArr.append("SELECT COUNT(CustomerID), Country FROM Customers GROUP BY Country ORDER BY COUNT(CustomerID) DESC;")
 
     #SQL Database
-    answerArr.append("CREATE DATABASE TestDB;")
+    answerArr.append("CREATE DATABASE testDB;")
     answerArr.append("DROP DATABASE testDB;")
     # answerArr.append("Write the correct SQL statement to create a new table called Persons") --> Skip this
     answerArr.append("DROP TABLE Persons;")
@@ -199,7 +199,7 @@ populateAnswerArr(answerArr)
 
 # Ensure the correspondence between questions and answers
 questions_and_answers = list(zip(queryArr, answerArr))
-# random.shuffle(questions_and_answers)
+random.shuffle(questions_and_answers)
 
 RED = "\033[91m"
 GREEN = "\033[92m"
@@ -209,29 +209,29 @@ RESET = "\033[0m"  # Reset color to default
 
 restart = True
 while restart:
+    remaining_questions = questions_and_answers[:]  # Create a copy of the list to work with
+    random.shuffle(remaining_questions)  # Shuffle the list of questions
     print("\n")
-    for query, correct_answer in questions_and_answers:
-        user_answer = False
+    while remaining_questions:
+        query, correct_answer = remaining_questions.pop(0)
+        print(LIGHT_BLUE + query + RESET)
+        user_answer = input("Enter query: ")
 
-        while not user_answer:
-            print(LIGHT_BLUE + query + RESET)
-            answer = input("Enter query: ")
+        if user_answer == correct_answer:
+            print(GREEN + "Correct!" + RESET)
 
-            if answer == correct_answer:
-                user_answer = True
-                print(GREEN + "Correct!" + RESET)
+        elif user_answer.lower() == "answer":
+            print(correct_answer)
+            remaining_questions.append((query, correct_answer))  # Re-append the question to the end
 
-            elif answer.lower() == "skip":
-                user_answer = True
-                print(YELLOW + "Skipping question..." + RESET)
+        elif user_answer.lower() == "quit":
+            sys.exit()
 
-            elif answer.lower() == "quit":
-                sys.exit()
+        else:
+            print(RED + "Incorrect. Try again!" + RESET)
+            start_sound_thread('oof.wav')
+            remaining_questions.append((query, correct_answer))  # Re-append the question to the end
 
-            else:
-                print(RED + "Incorrect. Try again!" + RESET)
-                start_sound_thread('oof.wav')
+        print("\n")
 
-            print("\n")
-        
     restart = askRestart()
